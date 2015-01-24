@@ -5,12 +5,9 @@
         <group>
             <file>file:/C:/Users/tomoki/Documents/NetBeansProjects/TestGame/src/testgame/Object.java</file>
             <file>file:/C:/Users/tomoki/Documents/NetBeansProjects/TestGame/src/testgame/MoveObject.java</file>
-            <file>file:/C:/Users/tomoki/Documents/NetBeansProjects/TestGame/src/testgame/Scale.java</file>
             <file>file:/C:/Users/tomoki/Documents/NetBeansProjects/TestGame/src/testgame/FieldObject.java</file>
             <file>file:/C:/Users/tomoki/Documents/NetBeansProjects/TestGame/src/testgame/TestGame.java</file>
-            <file>file:/C:/Users/tomoki/Documents/NetBeansProjects/TestGame/src/testgame/Color.java</file>
-            <file>file:/C:/Users/tomoki/Documents/NetBeansProjects/TestGame/src/testgame/Point.java</file>
-            <file>file:/C:/Users/tomoki/Documents/NetBeansProjects/TestGame/src/testgame/Face.java</file>
+            <file>file:/C:/Users/tomoki/Documents/NetBeansProjects/TestGame/src/testgame/Weapon.java</file>
             <file>file:/C:/Users/tomoki/Documents/NetBeansProjects/TestGame/src/testgame/Item.java</file>
         </group>
     </open-files>

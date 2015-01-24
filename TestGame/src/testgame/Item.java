@@ -10,10 +10,11 @@ import static org.lwjgl.opengl.GL11.*;
  *
  * @author tomoki
  */
-public class Item extends Object{
-
-    public Item() {
-        super(null, null, 0, 0, 0);
+public class Item extends MoveObject{
+    protected String ItemName;
+    protected int ItemID;
+    public Item(Color color, Scale scale, float x, float y, float z, int direction) {
+        super(color, scale, x, y, z, direction);   
     }
     
 }

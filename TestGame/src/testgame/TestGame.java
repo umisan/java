@@ -29,12 +29,12 @@ public class TestGame {
     private float cameraLookAtZ = 0.0f;
     private FieldObject wall;
     private MoveObject player;
-    private MoveObject sword;
+    private Weapon sword;
     public void start()
     {
         wall = new FieldObject(new Color(0.5f, 0.5f, 0.5f), new Scale(100.0f, 20.0f, 20.0f), 600.0f, 0.0f, 0.0f);
         player = new MoveObject(new Color(1.0f, 0.0f, 0.0f), new Scale(10.0f, 10.0f, 10.0f), 0.0f, 0.0f, 0.0f, 0);
-        sword = new MoveObject(new Color(0.3f, 0.3f, 0.3f), new Scale(2.0f, 2.0f, 30.0f), 0.0f, -10.0f, 5.0f, 0);
+        sword = new Weapon(new Color(0.3f, 0.3f, 0.3f), new Scale(2.0f, 2.0f, 30.0f), 0);
         try {
             Display.setDisplayMode(new DisplayMode(width, height));
             Display.setTitle("world");
@@ -47,6 +47,7 @@ public class TestGame {
         try {
             //ポリゴンの表のみ表示
             glEnable(GL_CULL_FACE);
+            glEnable(GL_DEPTH_TEST);
             glCullFace(GL_BACK);
             
             glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
@@ -95,29 +96,33 @@ public class TestGame {
         {
             cameraPostionY+= 0.1f;
             cameraLookAtY+=0.1f;
-            player.changeDirection(2);
-            player.moveUp();
+            player.moveUp(2);
+            //sword.moveUp(2);
+            sword.changeDirection(2);
             System.out.println("up");
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_DOWN)){
             cameraPostionY-= 0.1f;
             cameraLookAtY-= 0.1f;
-            player.changeDirection(6);
-            player.moveDown();
+            player.moveDown(6);
+            //sword.moveDown(6);
+            sword.changeDirection(6);
             System.out.println("down");
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
             cameraPostionX+= 0.1f;
             cameraLookAtX+= 0.1f;
-            player.changeDirection(0);
-            player.moveRight();
+            player.moveRight(0);
+            //sword.moveRight(0);
+            sword.changeDirection(0);
             System.out.println("right");
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
             cameraPostionX-= 0.1f;
             cameraLookAtX-= 0.1f;
-            player.changeDirection(4);
-            player.moveLeft();
+            player.moveLeft(4);
+            //sword.moveLeft(0);
+            sword.changeDirection(4);
             System.out.println("left");
         }        
         while(Keyboard.next())
@@ -161,7 +166,11 @@ public class TestGame {
         
         wall.renderObject();
         player.renderObject();
-        sword.renderObject();
+        sword.renderObject(player.getX() , player.getY(), player.getZ() );
+        System.out.println("player");
+        player.debug();
+        System.out.println("sword");
+        sword.debug();
 
     }
     

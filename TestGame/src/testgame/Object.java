@@ -65,7 +65,10 @@ public class Object {
         objectColor.setColor();
         objectScale.changeObjectScale();
         //スケールによってオブジェクトによって1の大きさが違うので、正規化する必要がある
-        glTranslatef(x /objectScale.getScaleX(), y / objectScale.getScaleY(), z  / objectScale.getScaleZ());
+        glTranslatef(x /objectScale.getScaleX(), 
+                     y / objectScale.getScaleY(), 
+                    (z+ objectScale.getScaleZ())  / objectScale.getScaleZ());
+        //↑オブジェクトが地面にめり込まないように
         glBegin(GL_QUADS);
         for(Face face : Face.values())
             face.draw();
