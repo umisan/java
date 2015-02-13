@@ -5,6 +5,7 @@
  */
 package testgame;
 
+import java.util.ArrayList;
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glEnd;
@@ -18,11 +19,16 @@ import static org.lwjgl.opengl.GL11.glTranslatef;
  * @author tomoki
  */
 public class Weapon extends Item{
-
-    public Weapon(Color color, Scale scale,int direction) {
-        super(color, scale, 0.0f, 0.0f, 0.0f, direction);
+    public Weapon(Color color, Scale scale) {
+        super(color, scale, 0.0f, 0.0f, 0.0f, 0);
     }
-    
+    //共通の攻撃メソッド。オーバーライドする必要あり
+    public void attack()
+    {
+        
+    }
+            
+    //playerの座標を受け取り、決まった位置に描画する
     public void renderObject(float x, float y, float z)
     {
         float angle = 45.0f * getDirection();
@@ -31,45 +37,29 @@ public class Weapon extends Item{
         this.z = z;
         glPushMatrix();
         objectColor.setColor();
-        objectScale.changeObjectScale();
-        //glRotatef(angle, 0, 0, 1);
+//        objectScale.changeObjectScale();
         switch(getDirection())
         {
             case 0:
                 y = y - 20.0f;
-                glTranslatef(x / objectScale.getScaleX(), 
-                             y / objectScale.getScaleY(), 
-                            (z + objectScale.getScaleZ())  / objectScale.getScaleZ());
                 break;
             case 2:
                 x = x + 20.0f;
-                glTranslatef( x / objectScale.getScaleX(),
-                              y / objectScale.getScaleY(), 
-                              (z + objectScale.getScaleZ())  / objectScale.getScaleZ());
                 break;
             case 4:
                 y = y + 20.0f;
-                glTranslatef(x / objectScale.getScaleX(),
-                             y / objectScale.getScaleY(), 
-                             (z + objectScale.getScaleZ())  / objectScale.getScaleZ());
                 break;
             case 6:
                 x = x - 20.0f;
-                glTranslatef(x  / objectScale.getScaleX(),
-                             y / objectScale.getScaleY(), 
-                             (z + objectScale.getScaleZ())  / objectScale.getScaleZ());
                 break;
         }
-        //スケールによってオブジェクトによって1の大きさが違うので、正規化する必要がある
-       // glTranslatef(0.0f, -10.0f, 5.0f);
-//        glRotatef(angle, 0, 0, 1);//0度から何度回転させるかなので、差分をとる必要がない
-//        glTranslatef(playerPositonX /objectScale.getScaleX(), 
-//               playerPostionY / objectScale.getScaleY(), 
-//               playerPostionZ / objectScale.getScaleZ());
-        //glTranslatef(playerPositonX, playerPostionY, playerPostionZ);
+        glTranslatef(x, y, z + objectScale.getScaleZ());
+        //glRotatef(45.0f, 1, 0, 0);
+        objectScale.changeObjectScale();
         glBegin(GL_QUADS);
-        for(Face face : Face.values())
-            face.draw();
+//        for(Face face : Face.values())
+//            face.draw();
+            draw();
         glEnd();
         glPopMatrix();
     }

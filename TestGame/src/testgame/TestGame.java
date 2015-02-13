@@ -28,14 +28,18 @@ public class TestGame {
     private float cameraLookAtY = 0.0f;
     private float cameraLookAtZ = 0.0f;
     private FieldObject wall;
-    private MoveObject player;
-    private Weapon sword;
+//    private MoveObject player;
+//    private Weapon sword;
+    private Player player;
+    private Gun gun;
     public void start()
     {
         wall = new FieldObject(new Color(0.5f, 0.5f, 0.5f), new Scale(100.0f, 20.0f, 20.0f), 600.0f, 0.0f, 0.0f);
-        player = new MoveObject(new Color(1.0f, 0.0f, 0.0f), new Scale(10.0f, 10.0f, 10.0f), 0.0f, 0.0f, 0.0f, 0);
-        sword = new Weapon(new Color(0.3f, 0.3f, 0.3f), new Scale(2.0f, 2.0f, 30.0f), 0);
-        try {
+        player = new Player(new Color(1.0f, 0.0f, 0.0f), new Scale(10.0f, 10.0f, 10.0f), 0.0f, 0.0f, 0.0f, 0);
+        gun = new Gun(new Color(0.4f, 0.3f, 0.2f), new Scale(5.0f, 10.0f, 5.0f));
+        gun.setBallet(new Color(0.2f, 0.2f, 0.2f), new Scale(2.0f, 2.0f, 2.0f), 5, 20, 300);
+        player.setWeapon(gun);
+;        try {
             Display.setDisplayMode(new DisplayMode(width, height));
             Display.setTitle("world");
             Display.create();
@@ -51,15 +55,6 @@ public class TestGame {
             glCullFace(GL_BACK);
             
             glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
-            
-//            //カメラ用の設定変更を宣言する
-//            glMatrixMode(GL_PROJECTION);
-//            glLoadIdentity();
-//            GLU.gluPerspective(30.0f, (float)width/(float)height, 0.1f, 1000.0f);
-//            gluLookAt(cameraPostionX, cameraPostionY, cameraPostionZ, 
-//                    0.0f, 0.0f, 20.0f, 
-//                    0.0f, 0.0f, 1.0f);
-            
             while(!Display.isCloseRequested())
             {
                 //カメラ用の設定変更を宣言する
@@ -97,32 +92,36 @@ public class TestGame {
             cameraPostionY+= 0.1f;
             cameraLookAtY+=0.1f;
             player.moveUp(2);
+            gun.setDirection(2);
             //sword.moveUp(2);
-            sword.changeDirection(2);
+            //sword.changeDirection(2);
             System.out.println("up");
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_DOWN)){
             cameraPostionY-= 0.1f;
             cameraLookAtY-= 0.1f;
             player.moveDown(6);
+            gun.setDirection(6);
             //sword.moveDown(6);
-            sword.changeDirection(6);
+            //sword.changeDirection(6);
             System.out.println("down");
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
             cameraPostionX+= 0.1f;
             cameraLookAtX+= 0.1f;
             player.moveRight(0);
+            gun.setDirection(0);
             //sword.moveRight(0);
-            sword.changeDirection(0);
+            //sword.changeDirection(0);
             System.out.println("right");
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
             cameraPostionX-= 0.1f;
             cameraLookAtX-= 0.1f;
             player.moveLeft(4);
+            gun.setDirection(4);
             //sword.moveLeft(0);
-            sword.changeDirection(4);
+            //sword.changeDirection(4);
             System.out.println("left");
         }        
         while(Keyboard.next())
@@ -135,7 +134,7 @@ public class TestGame {
                 }
                 if(Keyboard.getEventKey() == Keyboard.KEY_S)
                 {
-                    
+                    player.attack();
                 }
             }
         }
@@ -166,11 +165,11 @@ public class TestGame {
         
         wall.renderObject();
         player.renderObject();
-        sword.renderObject(player.getX() , player.getY(), player.getZ() );
+        //sword.renderObject(player.getX() , player.getY(), player.getZ());
         System.out.println("player");
         player.debug();
         System.out.println("sword");
-        sword.debug();
+        //sword.debug();
 
     }
     

@@ -119,16 +119,19 @@ public class MoveObject extends Object {
         float angle = 45.0f * getDirection();
         glPushMatrix();
         objectColor.setColor();
-        objectScale.changeObjectScale();
+//        objectScale.changeObjectScale();
         //スケールによってオブジェクトによって1の大きさが違うので、正規化する必要がある
-        glTranslatef(x /objectScale.getScaleX(), 
-                     y / objectScale.getScaleY(), 
-                    (z + objectScale.getScaleZ())  / objectScale.getScaleZ());
+//        glTranslatef(x /objectScale.getScaleX(), 
+//                     y / objectScale.getScaleY(), 
+//                    (z + objectScale.getScaleZ())  / objectScale.getScaleZ());
+        glTranslatef(x, y, z + objectScale.getScaleZ());
         //↑オブジェクトが地面にめり込まないように
         glRotatef(angle, 0, 0, 1);//0度から何度回転させるかなので、差分をとる必要がない
+        objectScale.changeObjectScale();
         glBegin(GL_QUADS);
-        for(Face face : Face.values())
-            face.draw();
+//        for(Face face : Face.values())
+//            face.draw();
+            draw();
         glEnd();
         glPopMatrix();
     }

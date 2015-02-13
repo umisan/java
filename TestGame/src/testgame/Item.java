@@ -13,8 +13,21 @@ import static org.lwjgl.opengl.GL11.*;
 public class Item extends MoveObject{
     protected String ItemName;
     protected int ItemID;
+    
     public Item(Color color, Scale scale, float x, float y, float z, int direction) {
         super(color, scale, x, y, z, direction);   
+    }
+    
+    //getter
+    public String getItemName()
+    {
+        return ItemName;
+    }
+    
+    //setter
+    public void setItemName(String name)
+    {
+        ItemName = name;
     }
     
 }
