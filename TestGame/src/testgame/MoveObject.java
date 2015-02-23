@@ -5,10 +5,12 @@
  */
 package testgame;
 
-import com.sun.jmx.snmp.internal.SnmpSecuritySubSystem;
+
 import static org.lwjgl.opengl.GL11.*;
 import java.math.*;
-import sun.org.mozilla.javascript.internal.Token;
+import java.awt.*;
+import java.rmi.activation.ActivationSystem;
+
 
 /**
  *
@@ -18,12 +20,22 @@ public class MoveObject extends Object {
     protected boolean jumpTriger = false;
     protected boolean jumpState = true;
     protected float zbuf;
-    protected int direction;
+    protected int direction;    
+    private static int monitorHeight;   //正規化用のモニターの高さ
+    private static int monitorWidth;    //正規化用のモニターの幅
+    protected int speedX;               //オブジェクトのx軸移動スピード
+    protected int speedY;               //オブジェクトのy軸移動スピード
     //ジャンプの高さのプロパティが必要
     public MoveObject(Color color, Scale scale, float x, float y, float z, 
                         int directrion) {
         super(color, scale, x, y, z);
         this.direction = directrion;
+        GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        Rectangle rectangle = graphicsEnvironment.getMaximumWindowBounds();
+        monitorHeight = rectangle.height;
+        monitorWidth = rectangle.width;
+        speedX = monitorWidth / monitorWidth;
+        speedY = monitorHeight / monitorHeight;
     }
     
     //getter
@@ -39,6 +51,15 @@ public class MoveObject extends Object {
     {
         return direction;
     }
+    public int getSpeedY()
+    {
+        return speedX;
+    }
+    public  int getSpeedX()
+    {
+        return speedX;
+    }
+    
     //setter
     public void setJumpTriger(boolean state)
     {
@@ -51,6 +72,14 @@ public class MoveObject extends Object {
     public void setDirection(int direction)
     {
         this.direction = direction;
+    }
+    public void setSpeedY(float speedScale)
+    {
+        speedY = (int)(monitorHeight * speedScale) / monitorHeight;
+    }
+    public void setSpeedX(float speedScale)
+    {
+        speedY = (int)(monitorWidth * speedScale) / monitorWidth;
     }
     
     //for debug
@@ -73,22 +102,22 @@ public class MoveObject extends Object {
     public void moveUp(int direction)
     {
         changeDirection(direction);
-        setY(getY() + 0.1f);
+        setY(getY() + speedY);
     }
     public void moveDown(int direction)
     {
         changeDirection(direction);
-        setY(getY() - 0.1f);
+        setY(getY() - speedY);
     }
     public void moveRight(int direction)
     {
         changeDirection(direction);
-        setX(getX() + 0.1f);
+        setX(getX() + speedX);
     }
     public void moveLeft(int direction)
     {
         changeDirection(direction);
-        setX(getX() - 0.1f);
+        setX(getX() - speedX);
     }
     
     //jump
@@ -99,13 +128,13 @@ public class MoveObject extends Object {
         {
             if(temp <= 50 && jumpState)
             {
-                setZ(getZ() + 0.1f);
+                setZ(getZ() + speedY);
             }else{
                 jumpState = false;
             }
             if(!jumpState && temp >= zbuf)//将来的には衝突判定の結果による
             {
-                setZ(getZ() - 0.1f);
+                setZ(getZ() - speedY);
             }else if(!jumpState){
                 jumpState = true;
                 setJumpTriger(false);

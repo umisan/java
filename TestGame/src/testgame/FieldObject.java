@@ -10,7 +10,9 @@ package testgame;
  * @author tomoki
  */
 public class FieldObject extends Object{
-    public FieldObject(Color color, Scale scale, float x, float y, float z) {
+    int ID;
+    public FieldObject(Color color, Scale scale, float x, float y, float z, int id) {
         super(color, scale, x, y, z);
+        ID = id;
     }
 }

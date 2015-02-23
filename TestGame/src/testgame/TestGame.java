@@ -28,13 +28,13 @@ public class TestGame {
     private float cameraLookAtY = 0.0f;
     private float cameraLookAtZ = 0.0f;
     private FieldObject wall;
-//    private MoveObject player;
-//    private Weapon sword;
+    private Filed filed;
     private Player player;
     private Gun gun;
     public void start()
     {
-        wall = new FieldObject(new Color(0.5f, 0.5f, 0.5f), new Scale(100.0f, 20.0f, 20.0f), 600.0f, 0.0f, 0.0f);
+        filed = new Filed();
+        wall = new FieldObject(new Color(0.5f, 0.5f, 0.5f), new Scale(100.0f, 20.0f, 20.0f), 600.0f, 0.0f, 0.0f, 1);
         player = new Player(new Color(1.0f, 0.0f, 0.0f), new Scale(10.0f, 10.0f, 10.0f), 0.0f, 0.0f, 0.0f, 0);
         gun = new Gun(new Color(0.4f, 0.3f, 0.2f), new Scale(5.0f, 10.0f, 5.0f));
         gun.setBallet(new Color(0.2f, 0.2f, 0.2f), new Scale(2.0f, 2.0f, 2.0f), 5, 20, 300);
@@ -89,8 +89,8 @@ public class TestGame {
     {
         if(Keyboard.isKeyDown(Keyboard.KEY_UP))
         {
-            cameraPostionY+= 0.1f;
-            cameraLookAtY+=0.1f;
+            cameraPostionY+= player.getSpeedY();
+            cameraLookAtY+=player.getSpeedY();
             player.moveUp(2);
             gun.setDirection(2);
             //sword.moveUp(2);
@@ -98,8 +98,8 @@ public class TestGame {
             System.out.println("up");
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_DOWN)){
-            cameraPostionY-= 0.1f;
-            cameraLookAtY-= 0.1f;
+            cameraPostionY-= player.getSpeedY();
+            cameraLookAtY-= player.getSpeedY();
             player.moveDown(6);
             gun.setDirection(6);
             //sword.moveDown(6);
@@ -107,8 +107,8 @@ public class TestGame {
             System.out.println("down");
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
-            cameraPostionX+= 0.1f;
-            cameraLookAtX+= 0.1f;
+            cameraPostionX+= player.getSpeedX();
+            cameraLookAtX+= player.getSpeedX();
             player.moveRight(0);
             gun.setDirection(0);
             //sword.moveRight(0);
@@ -116,8 +116,8 @@ public class TestGame {
             System.out.println("right");
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
-            cameraPostionX-= 0.1f;
-            cameraLookAtX-= 0.1f;
+            cameraPostionX-= player.getSpeedX();
+            cameraLookAtX-= player.getSpeedX();
             player.moveLeft(4);
             gun.setDirection(4);
             //sword.moveLeft(0);
@@ -165,11 +165,6 @@ public class TestGame {
         
         wall.renderObject();
         player.renderObject();
-        //sword.renderObject(player.getX() , player.getY(), player.getZ());
-        System.out.println("player");
-        player.debug();
-        System.out.println("sword");
-        //sword.debug();
 
     }
     
